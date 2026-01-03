@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrétinIA - Chatbot Premium</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #1e1b4b; color: white; margin:0; padding:0; }
+  #chat-container { max-width: 600px; margin: 2rem auto; background:#2b2a72; border-radius:10px; padding:1rem; }
+  #messages { height:400px; overflow-y:auto; border:1px solid #444; border-radius:10px; padding:0.5rem; background:#1f1e50; }
+  .message-user { background:#3b82f6; color:white; padding:0.5rem 1rem; border-radius:15px; margin:0.5rem 0; text-align:right; }
+  .message-bot { background:#f97316; color:white; padding:0.5rem 1rem; border-radius:15px; margin:0.5rem 0; text-align:left; }
+  #user-input { width:80%; padding:0.5rem; border-radius:5px; border:none; margin-right:0.5rem; }
+  #send-btn { padding:0.5rem 1rem; border:none; border-radius:5px; background:#3b82f6; color:white; cursor:pointer; }
+</style>
+</head>
+<body>
+<div id="chat-container">
+  <h2>CrétinIA - Chatbot Premium</h2>
+  <div id="messages"></div>
+  <div style="margin-top:1rem;">
+    <input type="text" id="user-input" placeholder="Tape ton message...">
+    <button id="send-btn">Envoyer</button>
+  </div>
+</div>
+
+<script>
+const messagesContainer = document.getElementById('messages');
+const input = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function addMessage(text, isUser=false) {
+  const div = document.createElement('div');
+  div.className = isUser ? 'message-user' : 'message-bot';
+  div.textContent = text;
+  messagesContainer.appendChild(div);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// IA améliorée style GPT-4 (simulé)
+function getBotResponse(message) {
+  const lower = message.toLowerCase();
+  if(lower.includes("bonjour")) return "Salut ! Je suis CrétinIA 🤖, ton assistant premium !";
+  if(lower.includes("blague")) return "Pourquoi l'ordinateur déteste la plage ? Parce qu'il a peur des virus 😆";
+  if(lower.includes("science")) return "La gravité est une force qui attire les objets les uns vers les autres. Plus la masse est grande, plus la force est forte.";
+  return "Hmm, je n'ai pas encore de réponse précise, mais je m'améliore tous les jours ! Demande-moi autre chose 😎";
+}
+
+function sendMessage() {
+  const userMessage = input.value.trim();
+  if(!userMessage) return;
+  addMessage(userMessage, true);
+  input.value = '';
+  setTimeout(()=> {
+    const botReply = getBotResponse(userMessage);
+    addMessage(botReply, false);
+  }, 800);
+}
+
+sendBtn.addEventListener('click', sendMessage);
+input.addEventListener('keypress', e => { if(e.key==='Enter') sendMessage(); });
+
+</script>
+</body>
+</html>
+function getBotResponse(message, context=[]) {
+  const lower = message.toLowerCase();
+
+  // contexte simple : on peut utiliser context[context.length-1] etc.
+
+  if(lower.includes("bonjour") || lower.includes("salut")) 
+      return "Salut ! Je suis CrétinIA 🤖, ton assistant premium ! Comment puis-je t'aider aujourd'hui ?";
+  
+  if(lower.includes("blague")) 
+      return "Voici une blague geek : Pourquoi les programmeurs confondent Halloween et Noël ? Parce que OCT 31 = DEC 25 😆";
+
+  if(lower.includes("science")) 
+      return "La gravité est une force qui attire les objets vers les autres. Par exemple, elle maintient les planètes en orbite autour du Soleil. Si tu veux, je peux te faire un petit schéma ASCII !";
+
+  if(lower.includes("sport")) 
+      return "Le meilleur joueur de foot est souvent débattu, mais Messi et Ronaldo sont des légendes. Je peux te donner les stats récentes si tu veux.";
+
+  if(lower.includes("technologie") || lower.includes("programmation")) 
+      return "Tu veux apprendre la programmation ? On peut commencer avec HTML/CSS/JS ou Python. Dis-moi ce que tu préfères !";
+
+  // Réponse générique détaillée style GPT-4
+  return "Hmm, je n'ai pas encore de réponse exacte, mais je peux t'aider à explorer ce sujet avec des explications détaillées, exemples et conseils. Pose-moi une question plus précise ! 🧠";
+}
